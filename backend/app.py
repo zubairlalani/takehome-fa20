@@ -51,6 +51,17 @@ def mirror(name):
     data = {"name": name}
     return create_response(data)
 
+@app.route("/shows", methods=['GET'])
+def get_all_shows():
+    return create_response({"shows": db.get('shows')})
+
+@app.route("/shows/<id>", methods=['DELETE'])
+def delete_show(id):
+    if db.getById('shows', int(id)) is None:
+        return create_response(status=404, message="No show with this id exists")
+    db.deleteById('shows', int(id))
+    return create_response(message="Show deleted")
+
 
 # TODO: Implement the rest of the API here!
 

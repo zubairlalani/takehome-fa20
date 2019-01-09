@@ -1,68 +1,43 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React.js Frontend
 
-## Available Scripts
+### Requirements
+* node version 8.x
+* npm version 5.x
 
-In the project directory, you can run:
+Install node and npm [here](https://nodejs.org/en/download/).
 
-### `npm start`
+Check if you have the correct versions by running the following commands in your terminal:
+```
+node -v
+```
+```
+npm -v
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Setup
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Install the [React Devtools](https://github.com/facebook/react-devtools) to easily debug and see what's going on in your React app.
 
-### `npm test`
+Your text editor may not natively support the JSX syntax that is used in this project, but there may be plugins to get proper syntax highlighting. For example, Sublime Text uses the `Babel` plugin.
+If you don't have a favorite text editor, or if you don't know how to get JSX support in your editor, try out VSCode.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To get started, once you are in the frontend directory of this exercise, install project dependencies:
+```
+npm install
+```
 
-### `npm run build`
+After that's done, run this to start development:
+```
+npm start
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This will start running the app and automatically open it at [http://localhost:3000](http://localhost:3000). Anytime you change and save the code, it will automatically reload! This will remain a running process in your terminal, so you will need to open a new tab or window to execute other commands.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### Optional Setup
+Prettier is a tool that automatically reformats your code to follow a certain set of coding style guidelines. It is configured to run automatically before each commit. This makes sure all of our code follows the same code styles, enforcing good practices and minimizing conflicts.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+It is definitely not necessary for this exercise, but there are prettier plugins you can install for your editor. See instructions [here](https://github.com/prettier/prettier#editor-integration).
 
-### `npm run eject`
+---------
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+For instructions on completing the exercise, look at the [README.md](../README.md) in the main directory.
