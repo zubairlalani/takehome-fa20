@@ -213,5 +213,5 @@ Tasks:
 Goal: Get familiar with user input
 
 Tasks:
-* In `App.js`, make an input and a submit button that adds a new show to the state
+* In `App.js`, make an input and a submit button that adds a new show to the state (set the new show's `id` to the next integer, and the `episodes_seen` to 0)
 * Note: If your button refreshes the whole page, throw in a button type: `<button type="button" ...`
