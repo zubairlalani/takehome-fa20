@@ -34,6 +34,8 @@ Now open a second terminal and navigate to this cloned repository.
 In one of the terminals, run `cd backend` then follow the [backend instructions](backend/README.md).
 In the other, run `cd frontend` then follow the [frontend instructions](frontend/README.md).
 
+Postman will be useful for testing your backend as you go, you can install [here](https://www.getpostman.com/) and you will find instructions on how to use it to test the endpoints. Note that the Postman examples are about a different scenario, but they should help you to use it.
+
 # Exercise 
 
 The following exercise will have you learn and apply some React and Flask to build a tool to keep track of your progress in multiple TV shows.
@@ -83,9 +85,24 @@ Define the endpoint:
 GET /shows/<id>
 ```
 
-This should retrieve a single show that has the `id` provided from the request.
+This should retrieve a single show that has the `id` provided from the request. For example, `GET /shows/1` would return:
+
+```
+{
+  "code": 200,
+  "message": "",
+  "result": {
+    "id": 1, 
+    "name": "Game of Thrones", 
+    "episodes_seen": 0
+  },
+  "success": true
+}
+```
 
 If there doesn't exist a show with the provided `id`, return a `404` with a descriptive `message`.
+
+*Use Part 6, which has been completed for you, to figure out how to write this endpoint*
 
 ## Part 3
 
@@ -135,12 +152,12 @@ POST /shows
 
 This endpoint should create a new show. Each request should also send a `name`, and `episodes_seen` parameter in the request's `body`. The `id` property will be created automatically in the mockdb.
 
-A successful request should return a status code of `201` and return the newly created show.
+A successful request should return a status code of `201` and return the newly created show (in the same format as Part 2).
 
 If any of the required parameters aren't provided, DO NOT create a new show in the db and return a `422` with a useful `message`. In general, your messages should provide the user/developer useful feedback on what they did wrong and how they can fix it.
 
 This is how you can send `body` parameters from Postman. Make sure you don't mistake this for query parameters!
-![Postman POST](docs/postman_post.png)
+![Postman POST](backend/docs/postman_post.png)
 
 ## Part 5
 
@@ -157,6 +174,8 @@ However, the difference with this `PUT` request is that only values with the pro
 You do not need to account for `body` parameters provided that aren't `name`, or `episodes_seen`.
 
 If the show with the provided `id` cannot be found, return a `404` and a useful `message`.
+
+If you do find the show, return it in the same way you did in Part 4 with the updated values.
 
 ## Part 6 - Already Done
 
