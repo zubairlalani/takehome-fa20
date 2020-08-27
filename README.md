@@ -1,8 +1,8 @@
 # The Challenge
 
-![Hack4Impact](https://uiuc.hack4impact.org/static/images/colored-logo.png)
+![Hack4Impact](https://uiuc.hack4impact.org/images/colored-logo.svg)
 
-This challenge is intended to expose you to some elements of our most common technical stack: a [React](https://reactjs.org/) frontend, and a Flask backend.
+The goal of this challenge is intended to expose you to and teach you some elements of our most common technical stack: a [React](https://reactjs.org/) frontend, and a Flask backend. We do not expect you to already be familiar with these technologies - so we will walk you through how to complete the exercise.
 
 In terms of React resources, the following may be helpful:
 
@@ -10,129 +10,156 @@ In terms of React resources, the following may be helpful:
 
 Reading the following will help you get a sense of the big picture when it comes to developing APIs/writing server side code, and how it fits in the context of a larger web application:
 
-- [How the Web Works](https://medium.freecodecamp.org/how-the-web-works-a-primer-for-newcomers-to-web-development-or-anyone-really-b4584e63585c) - Read all 3 parts, especially part 3!
+- [How the Web Works](https://medium.freecodecamp.org/how-the-web-works-a-primer-for-newcomers-to-web-development-or-anyone-really-b4584e63585c) - Read all 3 parts, **especially part 3**!
 - [Basics of HTTP](https://egghead.io/courses/understand-the-basics-of-http)
 
 This project will be broken down into multiple parts. After you finish this project, you must submit it by following the instructions below.
 
-*This exercise is due before this Sunday, January 27th at 11:59PM. If you have spent over 10 hours total, submit what you have!*
+*This exercise is due before this Sunday, January 27th at 11:59PM (CHANGE). If you have spent over 5 hours total, submit what you have!*
 
-For any questions, feel free to email angad@hack4impact.org.
+For any questions, feel free to email angad@hack4impact.org (CHANGE).
 
 ## Setup
 
-First, fork this repository. The fork button on your top right. What this does is copies this repository over to your account. Now you should have a repository with the name `<yourusername>/takehome-sp19`.
+First, fork this repository. The fork button on your top right. What this does is copies this repository over to your account. Now you should have a repository with the name `<yourusername>/takehome-fa20`.
 
-Then, clone this repository (click the green button saying "Clone or Download", choose http, and copy and paste it the location `<url>` ) and go into it:
+We will be giving setup instructions for doing this challenge with repl.it, an in-browser IDE, in order to make setup a bit simpler.
 
+Navigate to repl.it, and click "Sign Up" (if you don't already have an account). You may sign up however you like. Click the blue "+" button in the top right corner, and click "Import from GitHub". Paste your forked respository's name (`<yourusername>/takehome-fa20`) into the input box and click the blue "Import from GitHub" button. You may or may not be asked to provide authentication from GitHub - follow these instructions to allow repl to access your GitHub.
+
+Postman will be useful for testing your backend as you go, you can install [here](https://www.getpostman.com/) and you will find instructions on how to use it to test the endpoints.
+
+Make sure when you finish the challenge that you push your code to GitHub!!! **This is how we know you finished the challenge**.  You can do this by running:
 ```
-$ git clone <url>
-$ cd takehome-sp19
+git add .
+git commit -m "Finish challenge"
+git push origin master
 ```
-
-Now open a second terminal and navigate to this cloned repository. 
-In one of the terminals, run `cd backend` then follow the [backend instructions](backend/README.md).
-In the other, run `cd frontend` then follow the [frontend instructions](frontend/README.md).
-
-Postman will be useful for testing your backend as you go, you can install [here](https://www.getpostman.com/) and you will find instructions on how to use it to test the endpoints. Note that the Postman examples are about a different scenario, but they should help you to use it.
 
 # Exercise 
 
-The following exercise will have you learn and apply some React and Flask to build a tool to keep track of your progress in multiple TV shows.
+The following exercise will have you learn and apply some React and Flask to build a tool to keep track of restaurants you've tried.
 
 ## Flask
-
+Follow the [backend instructions](backend/README.md) in order to set up repl.it to work with our backend.
 ### Part 1 - Already Done
 
 ```
-GET /shows
+GET /restaurants
 ```
 
-This should return a properly formatted JSON response that contains a list of all the `show`s in the mockdb. If you call this endpoint immediately after starting the server, you should get this response in Postman:
+This should return a properly formatted JSON response that contains a list of all the `restaurant`s in the mockdb. To call this endpoint, go to repl and copy the link in the window above your terminal (it should be formatted something like this `https://takehome-fa20.<your username>.repl.co`). Then, paste this link into Postman, append `/restaurants` to the end, and ensure it says `GET` to the left of the link. Click send. If you call this endpoint after starting the server, you should get this response in Postman:
 
-```
+```json
 {
   "code": 200,
   "message": "",
   "result": {
-    "shows": [
+    "restaurants": [
       {
         "id": 1, 
-        "name": "Game of Thrones", 
-        "episodes_seen": 0
+        "name": "Golden Harbor", 
+        "rating": 10
       },
       {
         "id": 2, 
-        "name": "Naruto", 
-        "episodes_seen": 220
+        "name": "Potbelly", 
+        "rating": 6
       },
       {
         "id": 3, 
-        "name": "Black Mirror", 
-        "episodes_seen": 3
+        "name": "Noodles and Company", 
+        "rating": 8
       }
     ]
   },
   "success": true
 }
 ```
+![postman repl example](backend/docs/repl_postman.png)
+
+You can see this endpoint implemented in `backend/app.py`, where you see `def get_all_restaurants():`. Here, we declare our endpoint by putting the code `@app.route("/restaurants", methods=['GET'])` above our declaration of the `get_all_restaurants()` function. This indicates that the function defined below the `@app.route` is called when someone routes a `GET` request to `/restaurants`. Within the funtion, we are using our provided helper function `create_response()` to create this formatted JSON resopnse, and passing in our restaurant data. This data is retrieved from our `db` object, by calling `get` on it.
+
+No need to edit any code here! This is just an example. Now on to the next part...
 
 ### Part 2
 
 Define the endpoint:
 
 ```
-GET /shows/<id>
+GET /restaurants/<id>
 ```
 
-This should retrieve a single show that has the `id` provided from the request. For example, `GET /shows/1` would return:
+This should retrieve a single restaurant that has the `id` provided from the request. For example, `GET /restaurants/1` would return:
 
-```
+```json
 {
   "code": 200,
   "message": "",
   "result": {
     "id": 1, 
-    "name": "Game of Thrones", 
-    "episodes_seen": 0
+    "name": "Golden Harbor", 
+    "rating": 10
   },
   "success": true
 }
 ```
 
-If there doesn't exist a show with the provided `id`, return a `404` with a descriptive `message`.
+If there doesn't exist a restaurant with the provided `id`, return a `404` with a descriptive `message`.
 
-*Use Part 6, which has been completed for you, to figure out how to write this endpoint*
+To start off, we need to create a function, and tell Flask that it's a `GET` endpoint. We can do this by writing the following code:
+```python
+@app.route("/restaurants/<id>", methods=['GET'])
+def get_restaurant(id):
+  pass
+```
+Right now, this code does absolutely nothing if we call this endpoint! We need to find the specific restaurant, and return it as a response to the user. To find a restaurant, given an id, we can call `db.getById('restaurants', int(id))`. We also know we have our handy helper function `create_response()` to format our JSON response. Now, we can make our function look like this:
+```python
+@app.route("/restaurants/<id>", methods=['GET'])
+def get_restaurant(id):
+  restaurant = db.getById('restaurants', int(id))
+  return create_response(restaurant)
+```
+If we call our endpoint in Postman, it may look correct. But we're missing one important part! What happens when we call it on an id that doesn't exist, like 15? We need to fix that according to our specification mentioned above. If our `db` doesn't find the restaurant with the given id, it will return `None`. So, we can modify the above code to something like this:
+```python
+@app.route("/restaurants/<id>", methods=['GET'])
+def get_restaurant(id):
+  restaurant = db.getById('restaurants', int(id))
+  if restaurant is None:
+    return create_resopnse(status=404, message="No restaurant with this id exists")
+  return create_response(restaurant)
+```
+And now we're done with part 2!
 
-## Part 3
+### Part 3
 
-Extend the first `/shows` enpoint by adding the ability to query the shows based on the team they are on. You should _not_ use a url parameter like you did in Part 2. Instead, use a [query string](https://en.wikipedia.org/wiki/Query_string).
+Extend the first `/restaurants` enpoint by adding the ability to query the restaurants based on the rating they have. You should _not_ use a url parameter like you did in Part 2. Instead, use a [query string](https://en.wikipedia.org/wiki/Query_string).
 
-If `minEpisodes` is provided as a query string parameter, only return the shows which have that number or more episodes seen. If there are no such shows.
+If `minRating` is provided as a query string parameter, only return the restaurants which have that rating or above. If there are no such restaurants, return a `404` with a descriptive `message`.
 
-For this exercise, you can ignore any query string parameters other than `minEpisodes` and you may assume that the provided parameter will be an integer represented as a string of digits.
+For this exercise, you can ignore any query string parameters other than `minRating` and you may assume that the provided parameter will be an integer represented as a string of digits.
 
 In Postman, you can supply query string parameters writing the query string into your request url or by hitting the `Params` button next to `Send`. Doing so will automatically fill in the request url.
 
 The following should happen
 
-```
-GET /shows?minEpisodes=3
+```json
+GET /restaurants?minRating=8
 
 {
   "code": 200,
   "message": "",
   "result": {
-    "shows": [
+    "restaurants": [
       {
         "id": 2, 
-        "name": "Naruto", 
-        "episodes_seen": 220
+        "name": "Golden Harbor", 
+        "rating": 10
       },
       {
         "id": 3, 
-        "name": "Black Mirror", 
-        "episodes_seen": 3
+        "name": "Noodles and Company", 
+        "rating": 8
       }
     ]
   },
@@ -142,55 +169,73 @@ GET /shows?minEpisodes=3
 
 ![Postman Query String Request](backend/docs/postman_querystring.png)
 
-## Part 4
+For this part, we'll need to work off our existing function `get_all_restaurants()`. Since we're using a query string instead of a url parameter, we'll need to figure out how to parse this from the url. Luckily, Flask provides us a way to do this with `request` (which is already imported for you). You can simply do `request.args.get('minRating')`, and it will return either the string value of the parameter, or `None`.
+
+Here's a basic structure of how this function should look. Make sure to fill in the rest with your own logic, and ensure the correct error is returned when no restaurants are found.
+
+```python
+@app.route("/restaurants", methods=['GET'])
+def get_all_restaurants():
+    restaurants = db.get('restaurants')
+    minRating = request.args.get('minRating')
+    filtered_restaurants = []
+
+    # Put your code here!
+    
+    return create_response({"restaurants": filtered_restaurants})
+```
+
+### **Parts 4, 5, and 6 are not required and will not impact your candidacy! Only do them if you would like extra practice :)**
+
+### Part 4
 
 Define the endpoint:
 
 ```
-POST /shows
+POST /restaurants
 ```
 
-This endpoint should create a new show. Each request should also send a `name`, and `episodes_seen` parameter in the request's `body`. The `id` property will be created automatically in the mockdb.
+This endpoint should create a new restaurant. Each request should also send a `name`, and `rating` parameter in the request's `body`. The `id` property will be created automatically in the mockdb.
 
-A successful request should return a status code of `201` and return the newly created show (in the same format as Part 2).
+A successful request should return a status code of `201` and return the newly created restaurant (in the same format as Part 2).
 
-If any of the required parameters aren't provided, DO NOT create a new show in the db and return a `422` with a useful `message`. In general, your messages should provide the user/developer useful feedback on what they did wrong and how they can fix it.
+If any of the required parameters aren't provided, DO NOT create a new restaurant in the db and return a `422` with a useful `message`. In general, your messages should provide the user/developer useful feedback on what they did wrong and how they can fix it.
 
 This is how you can send `body` parameters from Postman. Make sure you don't mistake this for query parameters!
 ![Postman POST](backend/docs/postman_post.png)
 
-## Part 5
+### Part 5
 
 Define the endpoint:
 
 ```
-PUT /shows/<id>
+PUT /restaurant/<id>
 ```
 
-Here we need to provide a show's `id` since we need to specify which show to update. The `body` for this request should contain the same attributes as the `POST` request from Part 4.
+Here we need to provide a restaurant's `id` since we need to specify which restaurant to update. The `body` for this request should contain the same attributes as the `POST` request from Part 4.
 
-However, the difference with this `PUT` request is that only values with the provided keys (`name`, `episodes_seen`) will be updated, and any parameters not provided will not change the corresponding attribute in the show being updated.
+However, the difference with this `PUT` request is that only values with the provided keys (`name`, `rating`) will be updated, and any parameters not provided will not change the corresponding attribute in the restaurant being updated.
 
-You do not need to account for `body` parameters provided that aren't `name`, or `episodes_seen`.
+You do not need to account for `body` parameters provided that aren't `name`, or `rating`.
 
-If the show with the provided `id` cannot be found, return a `404` and a useful `message`.
+If the restaurant with the provided `id` cannot be found, return a `404` and a useful `message`.
 
-If you do find the show, return it in the same way you did in Part 4 with the updated values.
+If you do find the restaurant, return it in the same way you did in Part 4 with the updated values.
 
-## Part 6 - Already Done
+### Part 6 - Already Done
 
 Define the endpoint:
 
 ```
-DELETE /shows/<id>
+DELETE /restaurant/<id>
 ```
 
-This will delete the show with the associated `id`. Return a useful `message`, although nothing needs to be specified in the response's `result`.
+This will delete the restaurant with the associated `id`. Return a useful `message`, although nothing needs to be specified in the response's `result`.
 
-If the show with the provided `id` cannot be found, return a `404` and a useful `message`.
+If the restaurant with the provided `id` cannot be found, return a `404` and a useful `message`.
 
 ## React
-
+Follow the [frontend instructions](frontend/README.md) in order to set up repl.it to work with our frontend.
 ### Part 1
 
 Goal: Get familiar with JSX syntax, component structure, and passing props

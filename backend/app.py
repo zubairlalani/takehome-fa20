@@ -45,22 +45,21 @@ def create_response(
 def hello_world():
     return create_response({"content": "hello world!"})
 
-
 @app.route("/mirror/<name>")
 def mirror(name):
     data = {"name": name}
     return create_response(data)
 
-@app.route("/shows", methods=['GET'])
-def get_all_shows():
-    return create_response({"shows": db.get('shows')})
+@app.route("/restaurants", methods=['GET'])
+def get_all_restaurants():
+    return create_response({"restaurants": db.get('restaurants')})
 
-@app.route("/shows/<id>", methods=['DELETE'])
+@app.route("/restaurants/<id>", methods=['DELETE'])
 def delete_show(id):
-    if db.getById('shows', int(id)) is None:
-        return create_response(status=404, message="No show with this id exists")
-    db.deleteById('shows', int(id))
-    return create_response(message="Show deleted")
+    if db.getById('restaurants', int(id)) is None:
+        return create_response(status=404, message="No restaurant with this id exists")
+    db.deleteById('restaurants', int(id))
+    return create_response(message="Restaurant deleted")
 
 
 # TODO: Implement the rest of the API here!
@@ -69,4 +68,4 @@ def delete_show(id):
 ~~~~~~~~~~~~ END API ~~~~~~~~~~~~
 """
 if __name__ == "__main__":
-    app.run(port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)

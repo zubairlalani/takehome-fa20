@@ -1,7 +1,7 @@
 initial_db_state = {
-    "shows": [
-        {"id": 1, "name": "Game of Thrones", "episodes_seen": 0},
-        {"id": 2, "name": "Naruto", "episodes_seen": 220},
-        {"id": 3, "name": "Black Mirror", "episodes_seen": 3},
+    "restaurants": [
+        {"id": 1, "name": "Golden Harbor", "rating": 10},
+        {"id": 2, "name": "Potbelly", "rating": 6},
+        {"id": 3, "name": "Noodles and Company", "rating": 8},
     ]
 }
