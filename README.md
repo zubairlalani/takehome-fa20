@@ -29,7 +29,7 @@ Navigate to repl.it, and click "Sign Up" (if you don't already have an account).
 
 Postman will be useful for testing your backend as you go, you can install [here](https://www.getpostman.com/) and you will find instructions on how to use it to test the endpoints.
 
-Make sure when you finish the challenge that you push your code to GitHub!!! **This is how we know you finished the challenge**.  You can do this by running:
+Make sure when you finish the challenge that you push your code to GitHub!!! **This is how we know you finished the challenge**.  You can do this by running this in the repl.it terminal:
 ```
 git add .
 git commit -m "Finish challenge"
@@ -107,6 +107,9 @@ This should retrieve a single restaurant that has the `id` provided from the req
 
 If there doesn't exist a restaurant with the provided `id`, return a `404` with a descriptive `message`.
 
+<details>
+<summary>Walkthrough/hints</summary>
+
 To start off, we need to create a function, and tell Flask that it's a `GET` endpoint. We can do this by writing the following code:
 ```python
 @app.route("/restaurants/<id>", methods=['GET'])
@@ -130,6 +133,8 @@ def get_restaurant(id):
   return create_response(restaurant)
 ```
 And now we're done with part 2!
+
+</details>
 
 ### Part 3
 
@@ -169,6 +174,9 @@ GET /restaurants?minRating=8
 
 ![Postman Query String Request](backend/docs/postman_querystring.png)
 
+<details>
+<summary>Walkthrough/hints</summary>
+
 For this part, we'll need to work off our existing function `get_all_restaurants()`. Since we're using a query string instead of a url parameter, we'll need to figure out how to parse this from the url. Luckily, Flask provides us a way to do this with `request` (which is already imported for you). You can simply do `request.args.get('minRating')`, and it will return either the string value of the parameter, or `None`.
 
 Here's a basic structure of how this function should look. Make sure to fill in the rest with your own logic, and ensure the correct error is returned when no restaurants are found.
@@ -184,6 +192,7 @@ def get_all_restaurants():
     
     return create_response({"restaurants": filtered_restaurants})
 ```
+</details>
 
 ### **Parts 4, 5, and 6 are not required and will not impact your candidacy! Only do them if you would like extra practice :)**
 
@@ -241,7 +250,24 @@ Follow the [frontend instructions](frontend/README.md) in order to set up repl.i
 Goal: Get familiar with JSX syntax, component structure, and passing props
 
 Tasks:
-* Send a `complete` prop into the `Instructions` component that determines whether or not to display a second line of text [Hint](https://reactjs.org/docs/conditional-rendering.html)
+* Send a `complete` prop into the `Instructions` component that determines whether or not to display a second line of text
+
+<details>
+<summary>Walkthrough/hints</summary>
+
+Here, we want to look at our top level component in `App.js`. Everything that is shown on your screen is determined in the return of the `render()` function in this file. You can see that the `Instructions` component is returned here. We want to send a prop named `complete` to this component!
+
+To do so, we can just edit the code to look like this:
+```jsx
+<Instructions complete={true} />
+```
+
+This means our `Instructions` component now has a prop, named `complete`, that has the value of `true`. Props are used for passing values from one component down to another, and is quite useful in more complicated applications.
+
+Once you change `App.js` to include this new code, you'll see your repl browser refresh and show the text "Completed Part 1!". If we take a look at `Instructions.js`, we'll see that it was coded to only show this text when the `Instructions`' `complete` prop evaluates to `true.`
+
+Here's a [doc](https://reactjs.org/docs/conditional-rendering.html) on conditional rendering if you would like to read more on this topic.
+</details>
 
 ### Part 2
 Goal: Get familiar with component state
@@ -250,32 +276,141 @@ Tasks:
 * Open the empty `Counter` component file
 * Set its initial state of `count` to `0`
 * Display the value of the current count
-* Create two buttons, one that increments the count and one that decrements it. [Hint](https://egghead.io/lessons/react-use-component-state-with-react)
+* Create two buttons, one that increments the count and one that decrements it.
+
+<details>
+<summary>Walkthrough/hints</summary>
+
+In React, a component's state is an object that stores information about a component that can change (often, caused by interactions made from the UI). To initialize a component's state, we need to create a `constructor` function within the component, and set `this.state` equals to the initial state we want our component to have (in this case, we can just use `0`). To do this, take a look at `App.js` for reference - there, we are setting that component's state to contain a key (`restaurants`) that maps to a list of objects.
+
+Next, we want to actually display our `Counter` and its value. Remember in Part 1 where we mentioned how everything on your screen is determined in the `render` function in `App.js`? That means if we want to display our `Counter` component, we need to place it somewhere in the return of that function to display our counter. The render function should look something like this. Remember to import `Counter` at the top of `App.js`!
+```jsx
+render() {
+  return (
+    <div className="App">
+      <Counter/>
+      <Instructions complete={true} />
+      {this.state.restaurants.map(x => (
+        <Restaurant id={x.id} name={x.name} episodes_seen={x.episodes_seen} />
+      ))}
+    </div>
+  )
+}
+```
+You may notice that nothing on our display changes. If we take a look at the render function of `Counter`, we'll see that it only returns a `div`. We need to put `count` somewhere in the return of that function so it displays! Do this how you see fit. (You can access `count` from `this.state.count`. Depending on your implementation, you may also need to wrap that in curly braces {} to tell React that it's a variable, and to display the value).
+
+Our final task for this part is to add buttons to incremenet and decrement our count. This gets a bit more complicated, as it gets into taking user input and reflecting a change on the UI. A good first step to complete this task is just to add two buttons to our `Counter` component! This might look something like this:
+```jsx
+render() {
+  return (
+    <div>
+      {this.state.count}
+      <button>+</button>
+      <button>-</button>
+    </div> 
+  )
+}
+```
+Nothing too fancy, but feel free to be creative! Now we need to add functionality. A `button` has a prop called `onClick` - we can pass a function to this prop that will be called every time that button is clicked. Since we know this, let's create two functions `handleIncrement` and `handleDecrement`. In these functions, we want to **update our count state** to reflect the changed value.
+```jsx
+handleIncrement = () => {
+  this.setState((prevState) => ({count: prevState.count + 1}));
+}
+
+handleDecrement = () => {
+  this.setState((prevState) => ({count: prevState.count - 1}));
+}
+```
+Don't worry too much if you don't understand the syntax here - essentially what we're doing is creating a function, then using our previous state as the old count value, and either incrementing or decrementing from there. It's important to use the `prevState` rather than `this.state.count` since `setState` is asynchronous.
+
+Now that we have our functions, all we need to do is pass them to our buttons as a prop! To do this, we can modify our code to include this: `<button onClick={this.handleIncrement}>+</button>`. The same can be changed for our '-' button, but with `handleDecrement` instead.
+
+You can now test this out, and should see that clicking the buttons changes the count value displayed on the screen.
+
+If you're looking for more resources on state, [this tutorial](https://egghead.io/lessons/react-use-component-state-with-react) may be helpful.
+</details>
+
 
 ### Part 3
 Goal: Use nested components and props.
 
 Tasks:
-* Open the empty `Show` component which takes a shows `id`, `name`, and `episodes_seen`.
-* Display the show name
+* Open the empty `Restaurant` component which takes a restaurant's `id`, `name`, and `rating`.
+* Display the restaurant name
 * Modify the `Counter` component to take the initial count as a prop, and use this value for `count` in the initial state.
-* Display a `Counter` (Look how we nested `Instructions` into `App`) and pass the number of episodes watched as prop to `Counter`
-* To check that this works, just look at your running app, you should see 3 show names, each of which should have a counter next to it.
+* Display a `Counter` (Look how we nested `Instructions` into `App`) and pass the rating as the `count` prop to `Counter`
+* To check that this works, just look at your running app, you should see 3 restaurant names, each of which should have a counter next to it.
+
+<details>
+<summary>Walkthrough/hints</summary>
+
+From looking at how `Restaurant` is used in `App.js`, we know that `Restaurant` has props `id`, `name`, and `rating`. From this, we can display the `name` in our `Restaurant` component by including it in the `render` function. Remember, you can access a comonent's props using `this.props.<name of prop>`. After making this change, you should see the names of restaurants appear in your browser after "Completed Part 1!".
+
+Now we need to briefly switch over to the counter - we can see in our constructor that we set the initial `count` to be 0, but we want to initialize it from the `Counter`'s props instead. So, we can just replace 0 with `props.count`, and make sure to go back to `App.js` and include the `count` prop in our `Counter` component there.
+
+Now we want to be able to display the rating of a restaurant! We'll need to go back to the `Restaurant` component and include a `Counter` component in the render function. Feel free to play around with how this will look, but we won't be taking that into account when looking at your code.
+
+</details>
 
 ### Part 4 - Already Done
 Goal: Get familiar with rendering lists and javascript array functions
 
 Tasks:
-* In the `App` component, create an initial state with a list of shows where each show has a name and a number of episodes seen. Use this [data](backend/mockdb/dummy_data.py)
-* Display each show by passing each show's attributes as props to a `Show` component
+* In the `App` component, create an initial state with a list of restaurants where each restaurant has a name and rating. Use this [data](backend/mockdb/dummy_data.py)
+* Display each restaurant by passing each restaurant's attributes as props to a `Restaurant` component
 * Do this without using `for` or `while` loops
 * Very useful videos to watch:
- * [Functional Programming Intro](https://www.youtube.com/watch?v=BMUiFMZr7vk&index=1&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84) - just the first two videos are enough, although there's a lot to learn from the rest of the playlist and his other videos! (highly recommend subscribing)
- * [Rendering lists in React](https://egghead.io/lessons/egghead-use-the-key-prop-when-rendering-a-list-with-react)
+   * [Functional Programming Intro](https://www.youtube.com/watch?v=BMUiFMZr7vk&index=1&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84) - just the first two videos are enough, although there's a lot to learn from the rest of the playlist and his other videos! (highly recommend subscribing)
+   * [Rendering lists in React](https://egghead.io/lessons/egghead-use-the-key-prop-when-rendering-a-list-with-react)
 
 ### Part 5 
 Goal: Get familiar with user input
 
 Tasks:
-* In `App.js`, make an input and a submit button that adds a new show to the state (set the new show's `id` to the next integer, and the `episodes_seen` to 0)
+* In `App.js`, make an input and a submit button that adds a new restaurant to the state (set the new restaurant's `id` to the next integer, and the `rating` to 0)
 * Note: If your button refreshes the whole page, throw in a button type: `<button type="button" ...`
+
+<details>
+<summary>Walkthrough/hints</summary>
+
+To create a simple input, you can just add `<input />` anywhere in the return of the `render` function in `App.js`. We went through how to add buttons in part 2, so you can refer to that on how to create a button and add an `onClick` prop. The tricky part here is updating the state to include the newly added restaurant.
+
+Remember, we need to use `this.setState` to update state - we *cannot* do it by directly setting the state. We know we want to append our new restaurant to the list of current restaurants, so our `setState` could look something like this:
+
+```javascript
+this.setState((prevState) => ({restaurants: [...prevState.restaurants, newRestaurant]}))
+```
+The implementation can vary, but that's a good base of how the function should look.
+
+We still need to figure out how to get the value from the input when creating our `newRestaurant`. There's a few different ways to do this (one involving `form`s), but we'll be going over one using `input`'s `value` and `onChange` props. The `value` prop represents the current value in the `input` - usuallyl this is some prop or state variable within the component. The `onChange` prop is a function that is called every time the user changes the input of the `input`. So, if you were to type a letter, or delete a letter, `onChange` would be called.
+
+Here's a standard example of how this is done (taken from [StackOverflow](https://stackoverflow.com/questions/36683770/how-to-get-the-value-of-an-input-field-using-reactjs)) that you can adapt to this case:
+```javascript
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: ''
+    };
+  }
+
+  render() {
+    return (
+      //...
+      <input value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}/>
+      //...
+    );
+  },
+
+  updateInputValue(evt) {
+    this.setState({
+      inputValue: evt.target.value
+    });
+  }
+});
+```
+With this, now we have a way to track the current value of the `input` through our new state variable, `inputValue`.
+
+The rest is up to you to weave these two ideas together to accomplish the tasks!
+
+</details>

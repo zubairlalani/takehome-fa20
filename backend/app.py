@@ -55,7 +55,7 @@ def get_all_restaurants():
     return create_response({"restaurants": db.get('restaurants')})
 
 @app.route("/restaurants/<id>", methods=['DELETE'])
-def delete_show(id):
+def delete_restaurant(id):
     if db.getById('restaurants', int(id)) is None:
         return create_response(status=404, message="No restaurant with this id exists")
     db.deleteById('restaurants', int(id))

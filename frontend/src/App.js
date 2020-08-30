@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import Instructions from './Instructions'
-import Show from './Show'
+import Restaurant from './Restaurant'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      shows: [
-        {id: 1, name: "Game of Thrones", episodes_seen: 0},
-        {id: 2, name: "Naruto", episodes_seen: 220},
-        {id: 3, name: "Black Mirror", episodes_seen: 3},
+      restaurants: [
+        {id: 1, name: "Golden Harbor", rating: 10},
+        {id: 2, name: "Potbelly", rating: 6},
+        {id: 3, name: "Noodles and Company", rating: 8},
       ]
     }
   }
@@ -18,8 +18,8 @@ class App extends Component {
     return (
       <div className="App">
         <Instructions />
-        {this.state.shows.map(x => (
-          <Show id={x.id} name={x.name} episodes_seen={x.episodes_seen} />
+        {this.state.restaurants.map(x => (
+          <Restaurant id={x.id} name={x.name} rating={x.rating} />
         ))}
       </div>
     )

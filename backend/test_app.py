@@ -14,28 +14,28 @@ def test_mirror(client):
     assert res.json["result"]["name"] == "Tim"
 
 
-def test_get_users(client):
-    res = client.get("/users")
+def test_get_restaurants(client):
+    res = client.get("/restaurants")
     assert res.status_code == 200
 
-    res_users = res.json["result"]["users"]
-    assert len(res_users) == 4
-    assert res_users[0]["name"] == "Aria"
+    res_restaurants = res.json["result"]["restaurants"]
+    assert len(res_restaurants) == 3
+    assert res_restaurants[0]["name"] == "Golden Harbor"
 
 
-def tests_get_users_with_team(client):
-    res = client.get("/users?team=LWB")
+def tests_get_restaurants_with_rating(client):
+    res = client.get("/restaurants?minRating=8")
     assert res.status_code == 200
 
-    res_users = res.json["result"]["users"]
-    assert len(res_users) == 2
-    assert res_users[1]["name"] == "Tim"
+    res_restaurants = res.json["result"]["restaurants"]
+    assert len(res_restaurants) == 2
+    assert res_restaurants[1]["name"] == "Noodles and Company"
 
 
-def test_get_user_id(client):
-    res = client.get("/users/1")
+def test_get_restaurant_id(client):
+    res = client.get("/restaurants/1")
     assert res.status_code == 200
 
-    res_user = res.json["result"]["user"]
-    assert res_user["name"] == "Aria"
-    assert res_user["age"] == 19
+    res_restaurant = res.json["result"]
+    assert res_restaurant["name"] == "Golden Harbor"
+    assert res_restaurant["rating"] == 10

@@ -56,4 +56,6 @@ The functions defined in `mockdb/mockdb_interface.py` are how you can query the 
 
 When you modify your code within repl, the server will automatically update, _unless_ your code doesn't compile, in which case the server will stop running and you have to manually restart it after fixing your code.
 
+---------
+
 For instructions on completing the exercise, look at the [README.md](../README.md) in the main directory.
