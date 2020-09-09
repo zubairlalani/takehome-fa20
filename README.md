@@ -29,7 +29,7 @@ Navigate to repl.it, and click "Sign Up" (if you don't already have an account).
 
 Postman will be useful for testing your backend as you go, you can install [here](https://www.getpostman.com/) and you will find instructions on how to use it to test the endpoints.
 
-Make sure when you finish the challenge that you push your code to GitHub!!! **This is how we know you finished the challenge**.  You can do this by running this in the repl.it terminal:
+Make sure when you finish the challenge that you push your code to GitHub!!! **This is how we know you finished the challenge**.  You can do this by running this in the repl.it terminal **in the root directory of this project**:
 ```
 git add .
 git commit -m "Finish challenge"
