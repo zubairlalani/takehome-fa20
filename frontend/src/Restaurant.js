@@ -6,7 +6,13 @@ class App extends Component {
   
   render() {
     return (
-      <div/> 
+      <div>
+        <p>
+        {this.props.id + ". "}
+        {this.props.name+": "}
+        <Counter count= {this.props.rating}/>
+        </p>
+      </div>
     )
   }
 }
